@@ -30,3 +30,7 @@ factory.iml
 /failed-screenshots/
 /test-output/
 /target/
+.project
+.classpath
+framework.iml
+.factorypath
