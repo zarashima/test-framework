@@ -2,6 +2,7 @@ package keywords;
 
 import com.google.inject.Inject;
 import ensure.Wait;
+import helper.StringConstants;
 import io.appium.java_client.AppiumDriver;
 
 import java.util.HashMap;
@@ -10,6 +11,12 @@ public class Application {
 
 	@Inject
 	AppiumDriver driver;
+
+	@Inject
+	Device device;
+
+	@Inject
+	MobileActions mobileActions;
 
 	@Inject
 	Wait wait;
@@ -21,30 +28,37 @@ public class Application {
 	}
 
 	public boolean isAppInstalled(String bundleId) {
-		if (Common.isAndroid())
+		if (device.isAndroid())
 			return driver.isAppInstalled(bundleId);
 		else
 			return (Boolean) driver.executeScript("mobile : isAppInstalled", new HashMap<>().put("bundleId", bundleId));
 	}
 
 	public void activateApp(String bundleId) {
-		if (Common.isAndroid())
+		if (device.isAndroid())
 			driver.activateApp(bundleId);
 		else
-			Common.executeScript("mobile : activateApp", new HashMap<>().put("bundleId", bundleId));
+			mobileActions.executeScript("mobile : activateApp", new HashMap<>().put("bundleId", bundleId));
 	}
 
 	public void installApp(String appPath) {
-		if (Common.isAndroid())
+		if (device.isAndroid())
 			driver.activateApp(appPath);
 		else
-			Common.executeScript("mobile: installApp", new HashMap<>().put("app", appPath));
+			mobileActions.executeScript("mobile: installApp", new HashMap<>().put("app", appPath));
 	}
 
 	public void launchApp(String bundleId) {
-		if (Common.isAndroid())
+		if (device.isAndroid())
 			driver.launchApp();
 		else
-			Common.executeScript("mobile: launchApp", new HashMap<>().put("bundleId", bundleId));
+			mobileActions.executeScript("mobile: launchApp", new HashMap<>().put("bundleId", bundleId));
+	}
+
+	public void startBrowserApplication() {
+		if (device.isAndroid())
+			activateApp(StringConstants.ANDROID_CHROME_BUNDLE_ID);
+		else
+			activateApp(StringConstants.IOS_SAFARI_BUNDLE_ID);
 	}
 }
