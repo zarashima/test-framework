@@ -1,15 +1,16 @@
 package appiumdriver;
 
-import io.appium.java_client.AppiumDriver;
 import appiumdriver.local.LocalDriverManager;
+import io.appium.java_client.AppiumDriver;
 
 public class DriverFactory {
 
-    private DriverFactory() {}
+	private DriverFactory() {
+	}
 
-    public static AppiumDriver createInstance(String browser) {
-        AppiumDriver driver;
-        driver = new LocalDriverManager().createInstance(browser);
-        return driver;
-    }
+	public static AppiumDriver createInstance(String platformName, String udid, String deviceName) {
+		AppiumDriver driver;
+		driver = new LocalDriverManager().createInstance(platformName, udid, deviceName);
+		return driver;
+	}
 }

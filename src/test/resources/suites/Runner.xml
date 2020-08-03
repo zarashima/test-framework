@@ -1,0 +1,8 @@
+<suite name="OTP_Sanity_Suite" verbose="10">
+	<test name="Setup Vtap">
+		<classes>
+			<class name="runner.TestRunner">
+			</class>
+		</classes>
+	</test>
+</suite>

@@ -1,19 +1,19 @@
 package listeners;
 
+import appiumdriver.DriverManager;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
+import extentreports.ExtentManager;
+import extentreports.ExtentTestManager;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import extentreports.ExtentManager;
-import extentreports.ExtentTestManager;
 import utils.LogUtils;
-import appiumdriver.DriverManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class TestListener implements ITestListener {
 	@Override
 	public synchronized void onTestStart(ITestResult result) {
 		ExtentTestManager.startTest(result.getMethod().getMethodName());
-		ExtentTestManager.getTest().info(result.getMethod().getMethodName()+ " test executions started");
+		ExtentTestManager.getTest().info(result.getMethod().getMethodName() + " test executions started");
 	}
 
 	@Override

@@ -27,6 +27,5 @@ package appiumdriver;
 import io.appium.java_client.AppiumDriver;
 
 public interface IDriver {
-
-	AppiumDriver createInstance(String browser);
+	AppiumDriver createInstance(String platformName, String udid, String deviceName);
 }

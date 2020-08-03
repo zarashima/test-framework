@@ -28,7 +28,7 @@ public class AlterSuiteListener implements IAlterSuiteListener {
 		String[] platforms = suite.getParameter("browserFlavors").split(",");
 		XmlTest xmlTest = new XmlTest(suite);
 		Map<String, String> browserName = new HashMap<>();
-		for (String platform: platforms) {
+		for (String platform : platforms) {
 			browserName.put("browserName", platform);
 			try {
 				if (deviceInfo.anyDeviceConnected()) {

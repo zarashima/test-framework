@@ -9,7 +9,8 @@ public class DesiredCapabilitiesManager {
 
 	private static DesiredCapabilitiesManager instance;
 
-	private DesiredCapabilitiesManager() {}
+	private DesiredCapabilitiesManager() {
+	}
 
 	public static synchronized DesiredCapabilitiesManager getInstance() {
 		if (instance == null) {

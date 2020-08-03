@@ -10,7 +10,8 @@ public class PropertyUtils {
 	private final Properties props = new Properties();
 	private Integer timeout;
 	private String autHomePage;
-	private String androidApk;
+	private String androidApkPath;
+	private String iOSAppPath;
 
 	public static PropertyUtils getInstance() {
 		if (instance == null) {
@@ -28,15 +29,20 @@ public class PropertyUtils {
 			e.printStackTrace();
 		}
 		timeout = Integer.valueOf(props.getProperty("timeout"));
-		androidApk = props.getProperty("android.apk");
+		androidApkPath = props.getProperty("android.apk");
+		iOSAppPath = props.getProperty("iOS.ipa");
 	}
 
 	public Integer getTimeout() {
 		return timeout;
 	}
 
-	public String getAndroidApk() {
-		return androidApk;
+	public String getAndroidApkPath() {
+		return androidApkPath;
+	}
+
+	public String getiOSAppPath() {
+		return iOSAppPath;
 	}
 
 }

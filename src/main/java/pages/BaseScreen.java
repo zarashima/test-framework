@@ -2,11 +2,11 @@ package pages;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import keywords.Browser;
-import keywords.Context;
-import keywords.Device;
-import keywords.Element;
+import io.appium.java_client.MobileElement;
+import keywords.*;
 import org.openqa.selenium.WebDriver;
+
+import java.awt.datatransfer.Clipboard;
 
 public class BasePage {
 
@@ -18,6 +18,12 @@ public class BasePage {
 
 	@Inject
 	protected Browser browser;
+
+	@Inject
+	protected MobileActions mobileActions;
+
+	@Inject
+	protected Clipboard clipboard;
 
 	@Inject
 	protected AppiumDriver driver;

@@ -1,5 +1,7 @@
 package tests;
 
+import appiumdriver.DriverFactory;
+import appiumdriver.DriverManager;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import extentreports.ExtentTestManager;
@@ -15,8 +17,6 @@ import pages.HomeScreen;
 import reportportal.Launch;
 import reportportal.LaunchHandler;
 import reportportal.SessionContext;
-import appiumdriver.DriverFactory;
-import appiumdriver.DriverManager;
 import server.AppiumServerManager;
 
 public class BaseTest {
@@ -35,10 +35,10 @@ public class BaseTest {
 	}
 
 	@BeforeTest
-	@Parameters({"browserName"})
-	public void beforeTest(String browserName) {
+	@Parameters({"platformName", "deviceId", "deviceName"})
+	public void beforeTest(String platformName, String deviceId, String deviceName) {
 		Injector injector = Guice.createInjector(new DriverModule());
-		driver = DriverFactory.createInstance(browserName);
+		driver = DriverFactory.createInstance(platformName, deviceId, deviceName);
 		DriverManager.setDriver(driver);
 		homeScreen = injector.getInstance(HomeScreen.class);
 		browserKeywords = injector.getInstance(Browser.class);
@@ -51,8 +51,7 @@ public class BaseTest {
 	public void afterMethod(ITestResult iTestResult) {
 		devices = devices + DriverManager.getDeviceName() + "_";
 		Class<?> clazz = iTestResult.getTestClass().getRealClass();
-		if (SessionContext.getRpEnable())
-		{
+		if (SessionContext.getRpEnable()) {
 			launch.setAttributes("browser", devices);
 			launch.setAttributes("module", TestParameters.getModule(clazz));
 			launch.setAttributes("priority", TestParameters.getPriority(clazz).name());
