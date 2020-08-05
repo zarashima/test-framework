@@ -6,11 +6,9 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import extentreports.ExtentTestManager;
 import io.appium.java_client.AppiumDriver;
-import keywords.Browser;
-import keywords.Element;
-import keywords.Verification;
+import keywords.*;
 import modules.DriverModule;
-import modules.TestParameters;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import pages.HomeScreen;
@@ -26,6 +24,8 @@ public class BaseTest {
 	protected Element elementKeywords;
 	protected Verification verificationKeywords;
 	protected HomeScreen homeScreen;
+	protected Logs logsKeyword;
+	protected Application applicationKeywords;
 	protected Launch launch;
 	protected static String devices = "";
 
@@ -43,26 +43,24 @@ public class BaseTest {
 		homeScreen = injector.getInstance(HomeScreen.class);
 		browserKeywords = injector.getInstance(Browser.class);
 		elementKeywords = injector.getInstance(Element.class);
+		logsKeyword = injector.getInstance(Logs.class);
 		verificationKeywords = injector.getInstance(Verification.class);
+		applicationKeywords = injector.getInstance(Application.class);
 		launch = injector.getInstance(Launch.class);
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void afterMethod(ITestResult iTestResult) {
-		devices = devices + DriverManager.getDeviceName() + "_";
-		Class<?> clazz = iTestResult.getTestClass().getRealClass();
-		if (SessionContext.getRpEnable()) {
-			launch.setAttributes("browser", devices);
-			launch.setAttributes("module", TestParameters.getModule(clazz));
-			launch.setAttributes("priority", TestParameters.getPriority(clazz).name());
-			launch.setAttributes("createdBy", TestParameters.getCreatedBy(clazz));
-			LaunchHandler.updateLaunch(launch.getAttributes(), iTestResult.getMethod().getDescription());
-		}
+	public void afterTest(ITestResult iTestResult) {
 		ExtentTestManager.getTest().assignCategory(DriverManager.getDeviceName());
 	}
 
 	@AfterTest
-	public void afterTest() {
+	public void afterTest(ITestContext context) {
+		devices = devices + DriverManager.getDeviceName() + "_";
+		if (SessionContext.getRpEnable()) {
+			launch.setAttributes("device", devices);
+			LaunchHandler.updateLaunch(launch.getAttributes(), context.getCurrentXmlTest().getName());
+		}
 		DriverManager.quit();
 	}
 
