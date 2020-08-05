@@ -1,8 +1,6 @@
 package keywords;
 
-import appiumdriver.DriverManager;
 import com.google.inject.Inject;
-import ensure.Wait;
 import io.appium.java_client.AppiumDriver;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public class Context {
 
 	public String getWebContext() {
 		ArrayList<String> contexts = new ArrayList<>(driver.getContextHandles());
-		for (String context: contexts) {
+		for (String context : contexts) {
 			if (context.contains("WEBVIEW"))
 				return context;
 		}

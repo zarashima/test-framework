@@ -3,8 +3,6 @@ package keywords;
 import com.google.inject.Inject;
 import ensure.Wait;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utils.LogUtils;
 import utils.WebElementUtils;
@@ -31,21 +29,14 @@ public class Element {
 	public void setText(WebElement element, String inputText) {
 		wait.waitForElementDisplay(element);
 		element.clear();
-		((JavascriptExecutor) driver).executeScript("arguments[0].setAttribute('value', '" + inputText + "')", element);
+		element.sendKeys(inputText);
 	}
 
 	public void click(WebElement element) {
 		LogUtils.info("Click on element: " + WebElementUtils.getElementXpathInfo(element));
 		wait.waitForElementDisplay(element);
 		wait.waitForElementClickable(element);
-		scrollIntoView(element);
-		((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
-	}
-
-	public void scrollIntoView(WebElement element) {
-		LogUtils.info("Scroll into view of element: " + WebElementUtils.getElementXpathInfo(element));
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({behavior: 'smooth', block:'center', inline: 'center'});", element);
-		((JavascriptExecutor) driver).executeScript("window.scrollBy(0, -250);");
+		element.click();
 	}
 
 	public boolean verifyElementDisplayed(WebElement element) {
