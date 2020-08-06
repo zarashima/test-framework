@@ -10,9 +10,9 @@ public class Launch {
 	private String uuid;
 	private String id;
 	private String description;
-	private final List<Map<String,String>> attributes = new ArrayList<>();
+	private final List<Map<String, String>> attributes = new ArrayList<>();
 
-	Launch() {}
+	Launch() { }
 
 	public String getUuid() {
 		return uuid;
@@ -43,7 +43,7 @@ public class Launch {
 	}
 
 	public void setAttributes(String key, String value) {
-		Map<String,String> environment = new HashMap<>();
+		Map<String, String> environment = new HashMap<>();
 		environment.put("key", key);
 		environment.put("value", value);
 		this.attributes.add(environment);

@@ -29,9 +29,8 @@ public class SessionContext {
 			} else {
 				LOGGER.info("reportportal.properties file NOT FOUND - " + absolutePath);
 			}
-		}
-		catch (IOException e) {
-			LOGGER.error("ERROR in loading reportportal.properties file\n" + e.getMessage());
+		} catch (IOException e) {
+			LOGGER.error("ERROR in loading reportportal.properties file" + e.getMessage());
 			throw new RuntimeException(e.getMessage());
 		}
 		return properties;
