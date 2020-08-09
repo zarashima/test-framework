@@ -10,3 +10,5 @@ Just another mobile automation framework
 * TestNG
 * Extent Report
 * Maven
+* Freemaker
+* [MobileDeviceInfo](https://github.com/Testinium/MobileDeviceInfo)
