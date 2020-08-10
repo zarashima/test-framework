@@ -1,0 +1,10 @@
+android:
+    app: app/TheApp-v1.10.0.apk
+    autoGrantPermissions: true
+    newCommandTimeout: 3600
+    automationName: UIAutomator2
+iOS:
+    app:
+    appPackage:
+    appActivity:
+
