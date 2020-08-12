@@ -25,8 +25,12 @@ public class DriverManager {
 
 	public static String getDeviceName() {
 		Capabilities cap = DriverManager.getDriver().getCapabilities();
-		String deviceName = cap.getCapability("deviceName").toString();
+		String deviceName = cap.getCapability("deviceModel").toString();
 		String deviceVersion = cap.getCapability("platformVersion").toString();
-		return String.format("%s_%s", deviceName, deviceVersion);
+		return String.format("%s-%s", deviceName, deviceVersion);
+	}
+
+	public static String getPlatformName() {
+		return (String) DriverManager.getDriver().getCapabilities().getCapability("platformName");
 	}
 }

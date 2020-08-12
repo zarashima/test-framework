@@ -43,9 +43,9 @@ public class Launch {
 	}
 
 	public void setAttributes(String key, String value) {
-		Map<String, String> environment = new HashMap<>();
-		environment.put("key", key);
-		environment.put("value", value);
-		this.attributes.add(environment);
+		Map<String, String> attribute = new HashMap<>();
+		attribute.put("key", key);
+		attribute.put("value", value);
+		this.attributes.add(attribute);
 	}
 }
