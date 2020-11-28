@@ -5,7 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
 
-public class HomeScreen extends BasePage {
+public class HomeScreen extends BaseScreen {
 
 	@Inject
 	public HomeScreen(AppiumDriver driver) {

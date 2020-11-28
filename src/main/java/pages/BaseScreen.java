@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.awt.datatransfer.Clipboard;
 
-public class BasePage {
+public class BaseScreen {
 
 	@Inject
 	protected Context context;
@@ -29,7 +29,7 @@ public class BasePage {
 	protected AppiumDriver driver;
 
 	@Inject
-	public BasePage(AppiumDriver driver) {
+	public BaseScreen(AppiumDriver driver) {
 		this.driver = driver;
 	}
 }
