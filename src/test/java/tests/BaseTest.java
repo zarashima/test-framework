@@ -2,20 +2,32 @@ package tests;
 
 import appiumdriver.DriverFactory;
 import appiumdriver.DriverManager;
+import com.epam.reportportal.service.tree.ItemTreeReporter;
+import com.epam.reportportal.service.tree.TestItemTree;
+import com.epam.reportportal.testng.TestNGService;
+import com.epam.reportportal.testng.util.ItemTreeUtils;
+import com.epam.ta.reportportal.ws.model.FinishTestItemRQ;
+import com.epam.ta.reportportal.ws.model.attribute.ItemAttributesRQ;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import extentreports.ExtentTestManager;
 import io.appium.java_client.AppiumDriver;
 import keywords.*;
 import modules.DriverModule;
-import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
+import org.testng.collections.Sets;
 import pages.HomeScreen;
-import reportportal.Launch;
-import reportportal.LaunchHandler;
 import reportportal.SessionContext;
 import server.AppiumServerManager;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Set;
+
+import static com.epam.reportportal.testng.TestNGService.ITEM_TREE;
+
 public class BaseTest {
 
 	protected AppiumDriver<?> driver;
@@ -26,8 +38,6 @@ public class BaseTest {
 	protected HomeScreen homeScreen;
 	protected Logs logsKeyword;
 	protected Application applicationKeywords;
-	protected Launch launch;
-	protected static String devices = "";
 
 	@BeforeSuite
 	public void beforeSuite() {
@@ -47,26 +57,36 @@ public class BaseTest {
 		verificationKeywords = injector.getInstance(Verification.class);
 		applicationKeywords = injector.getInstance(Application.class);
 		clipboardKeywords = injector.getInstance(Clipboard.class);
-		launch = injector.getInstance(Launch.class);
 	}
 
-	@AfterMethod(alwaysRun = true)
-	public void afterTest(ITestResult iTestResult) {
+	@AfterMethod()
+	public void afterMethod(ITestResult testResult) {
+		if (SessionContext.getRpEnable()) {
+			ItemTreeUtils.retrieveLeaf(testResult, ITEM_TREE).ifPresent(testResultLeaf -> sendFinishRequest(testResultLeaf, testResult));
+		}
 		ExtentTestManager.getTest().assignCategory(DriverManager.getDeviceName());
 	}
 
 	@AfterTest
-	public void afterTest(ITestContext context) {
-		devices = devices + DriverManager.getDeviceName() + "_";
-		if (SessionContext.getRpEnable()) {
-			launch.setAttributes("device", devices);
-			LaunchHandler.updateLaunch(launch.getAttributes(), context.getCurrentXmlTest().getName());
-		}
+	public void afterTest() {
 		DriverManager.quit();
 	}
 
 	@AfterSuite
 	public void afterSuite() {
 		AppiumServerManager.stopAppiumServer();
+	}
+
+	private void sendFinishRequest(TestItemTree.TestItemLeaf testResultLeaf, ITestResult testResult) {
+		FinishTestItemRQ finishTestItemRQ = new FinishTestItemRQ();
+		Set<ItemAttributesRQ> testItemAttributes =  Sets.newHashSet(new ItemAttributesRQ("device", DriverManager.getDeviceName()));
+		testItemAttributes.add(new ItemAttributesRQ("platform", DriverManager.getPlatformName()));
+		finishTestItemRQ.setAttributes(testItemAttributes);
+		finishTestItemRQ.setStatus(testResult.isSuccess() ? "PASSED" : "FAILED");
+		finishTestItemRQ.setDescription(testResult.getMethod().getDescription());
+		finishTestItemRQ.setEndTime(Calendar.getInstance().getTime());
+		ItemTreeReporter.finishItem(TestNGService.getReportPortal().getClient(), finishTestItemRQ, ITEM_TREE.getLaunchId(), testResultLeaf)
+				.cache()
+				.blockingGet();
 	}
 }
