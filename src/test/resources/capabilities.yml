@@ -7,13 +7,3 @@ iOS:
     app:
     appPackage:
     appActivity:
-pCloudy:
-    integration: true
-    numberOfDevices: 2
-    pCloudy_Username:
-    pCloudy_ApiKey:
-    pCloudy_ApplicationName: vtap482Light9586.apk
-    appPackage: vkey.android.vtap
-    appActivity: SplashActivity
-    pCloudy_DeviceManafacturer: Samsung
-    pCloudy_DurationInMinutes: 10

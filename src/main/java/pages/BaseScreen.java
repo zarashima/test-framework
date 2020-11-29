@@ -2,11 +2,7 @@ package pages;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileElement;
 import keywords.*;
-import org.openqa.selenium.WebDriver;
-
-import java.awt.datatransfer.Clipboard;
 
 public class BaseScreen {
 

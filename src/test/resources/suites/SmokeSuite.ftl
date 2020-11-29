@@ -11,7 +11,7 @@
 			<parameter name="deviceName" value="${device.deviceName}"/>
 			<parameter name="deviceVersion" value="${device.deviceVersion}"/>
 			<classes>
-				<class name="tests.SignInTest">
+				<class name="tests.SampleTest">
 				</class>
 			</classes>
 		</test>

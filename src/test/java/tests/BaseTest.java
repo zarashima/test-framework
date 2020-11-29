@@ -16,13 +16,13 @@ import reportportal.Launch;
 import reportportal.LaunchHandler;
 import reportportal.SessionContext;
 import server.AppiumServerManager;
-
 public class BaseTest {
 
 	protected AppiumDriver<?> driver;
 	protected Browser browserKeywords;
 	protected Element elementKeywords;
 	protected Verification verificationKeywords;
+	protected Clipboard clipboardKeywords;
 	protected HomeScreen homeScreen;
 	protected Logs logsKeyword;
 	protected Application applicationKeywords;
@@ -46,6 +46,7 @@ public class BaseTest {
 		logsKeyword = injector.getInstance(Logs.class);
 		verificationKeywords = injector.getInstance(Verification.class);
 		applicationKeywords = injector.getInstance(Application.class);
+		clipboardKeywords = injector.getInstance(Clipboard.class);
 		launch = injector.getInstance(Launch.class);
 	}
 

@@ -1,10 +1,8 @@
 package tests;
 
 import annotations.TestInfo;
-import io.appium.java_client.android.AndroidDriver;
 import org.testng.annotations.Test;
 
-import java.util.List;
 
 @TestInfo(module = "signin",
 		priority = TestInfo.Priority.MEDIUM,
