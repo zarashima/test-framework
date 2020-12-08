@@ -5,6 +5,7 @@ import utils.YamlUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
@@ -19,7 +20,8 @@ public class BrowserStackConfig {
 	}
 
 	public static boolean isEnabled() {
-		return (boolean) browserStacksNode.get("enabled");
+		return Optional.ofNullable(System.getProperty("enabled"))
+				.orElse((String) browserStacksNode.get("enabled")).equals("true");
 	}
 
 	public static List<Map<String, String>> getDevices() {
@@ -29,15 +31,17 @@ public class BrowserStackConfig {
 	public static Map<String, Object> getSettings() {
 		return browserStacksNode.entrySet()
 				.stream().filter(s -> !s.getKey().equals("devices"))
-				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+				.collect(Collectors.toMap(Map.Entry::getKey,
+						s -> Optional.ofNullable(System.getProperty(s.getKey())).orElse((String) s.getValue())));
 	}
 
 	public static String getUserName() {
-		return (String) browserStacksNode.get("username");
+		return Optional.ofNullable(System.getProperty("username"))
+				.orElse((String) browserStacksNode.get("username"));
 	}
 
 	public static String getAccessKey() {
-		return (String) browserStacksNode.get("accessKey");
+		return Optional.ofNullable(System.getProperty("accessKey"))
+				.orElse((String) browserStacksNode.get("accessKey"));
 	}
-
 }
