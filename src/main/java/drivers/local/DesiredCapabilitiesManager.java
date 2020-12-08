@@ -1,4 +1,4 @@
-package appiumdriver.local;
+package drivers.local;
 
 import java.util.HashMap;
 import java.util.Map;

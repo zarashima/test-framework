@@ -1,4 +1,4 @@
-package appiumdriver;
+package drivers;
 
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Capabilities;
@@ -32,5 +32,13 @@ public class DriverManager {
 
 	public static String getPlatformName() {
 		return (String) DriverManager.getDriver().getCapabilities().getCapability("platformName");
+	}
+
+	public static String getVersion() {
+		return (String) DriverManager.getDriver().getCapabilities().getCapability("platformVersion");
+	}
+
+	public static String getSessionID() {
+		return DriverManager.getDriver().getSessionId().toString();
 	}
 }

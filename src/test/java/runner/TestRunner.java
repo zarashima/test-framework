@@ -5,11 +5,11 @@ import com.testinium.deviceinformation.DeviceInfo;
 import com.testinium.deviceinformation.DeviceInfoImpl;
 import com.testinium.deviceinformation.device.DeviceType;
 import com.testinium.deviceinformation.exception.DeviceNotFoundException;
-import com.testinium.deviceinformation.model.Device;
-import devices.DeviceInformation;
+import drivers.Device;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
-import gherkin.lexer.Fi;
+import helper.Platform;
+import config.BrowserStackConfig;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import utils.*;
@@ -29,7 +29,6 @@ public class TestRunner {
 	@Inject
 	private SuiteGeneration suiteGeneration;
 
-	private Suite suite;
 	@Inject
 	private RunnerHelpers runnerHelpers;
 	@Inject
@@ -42,17 +41,27 @@ public class TestRunner {
 		Template template = templateProcessor.getTemplate(ExecutionUtils.getParameter("testSuiteTemplate") + ".ftl");
 		SuiteTemplate suiteTemplate = new SuiteTemplate(template, templateData);
 		DeviceInfo deviceInfo = new DeviceInfoImpl(DeviceType.ALL);
-		List<DeviceInformation> devicesInformation = new ArrayList<>();
+		List<Device> devices = new ArrayList<>();
+
+		// Add local devices
 		if (deviceInfo.anyDeviceConnected()) {
-			for (Device device : deviceInfo.getDevices()) {
-				devicesInformation.add(new DeviceInformation(device.getDeviceProductName(),
-						device.getModelNumber(), device.getUniqueDeviceID(), device.getProductVersion()));
+			for (com.testinium.deviceinformation.model.Device device : deviceInfo.getDevices()) {
+				devices.add(new Device(device.getDeviceProductName(), device.getModelNumber(),
+						device.getUniqueDeviceID(), device.getProductVersion()));
 			}
 		}
-		templateData.put("threadCount", deviceInfo.getDevices().size());
-		templateData.put("devicesInformation", devicesInformation);
+
+		// Add remote devices
+		if (BrowserStackConfig.isEnabled()) {
+			for (Map<String, String> device : BrowserStackConfig.getDevices()) {
+				devices.add(new Device(Platform.BROWSERSTACKS.name(), device.get("device"), "", device.get("os_version")));
+			}
+		}
+
+		templateData.put("threadCount", devices.size());
+		templateData.put("devices", devices);
 		String generatedTestNgSuite = FileUtils.getTestSuiteFolder() + ExecutionUtils.getParameter("testSuiteTemplate") + ".xml";
-		suite = new Suite("Test Suite", generatedTestNgSuite);
+		Suite suite = new Suite("Test Suite", generatedTestNgSuite);
 		suiteGeneration = new SuiteGeneration(suite);
 		suiteGeneration.applyTemplate(suiteTemplate);
 		runnerHelpers.runSuite(generatedTestNgSuite);

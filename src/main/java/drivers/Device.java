@@ -1,14 +1,14 @@
-package devices;
+package drivers;
 
-public class DeviceInformation {
-	private String deviceName;
+public class Device {
 	private String platformName;
+	private String deviceName;
 	private String deviceId;
 	private String deviceVersion;
 
-	public DeviceInformation(String platformName, String deviceName, String deviceId, String deviceVersion) {
-		this.deviceName = deviceName;
+	public Device(String platformName, String deviceName, String deviceId, String deviceVersion) {
 		this.platformName = platformName;
+		this.deviceName = deviceName;
 		this.deviceId = deviceId;
 		this.deviceVersion = deviceVersion;
 	}

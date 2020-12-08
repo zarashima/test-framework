@@ -2,7 +2,6 @@ package keywords;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import utils.LogUtils;
 

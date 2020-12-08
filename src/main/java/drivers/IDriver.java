@@ -22,10 +22,10 @@
  * SOFTWARE.
  */
 
-package appiumdriver;
+package drivers;
 
 import io.appium.java_client.AppiumDriver;
 
 public interface IDriver {
-	AppiumDriver createInstance(String platformName, String udid, String deviceName);
+	AppiumDriver createInstance(Device device);
 }

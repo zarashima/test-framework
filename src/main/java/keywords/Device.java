@@ -2,10 +2,6 @@ package keywords;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import org.checkerframework.checker.nullness.Opt;
-
-import java.util.Objects;
-import java.util.Optional;
 
 public class Device {
 
@@ -30,4 +26,5 @@ public class Device {
 		return driver.getCapabilities().getCapability("platformName")
 				.toString().equalsIgnoreCase("iOS");
 	}
+
 }

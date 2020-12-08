@@ -4,7 +4,7 @@
 		<listener class-name="listeners.TestListener"/>
 		<listener class-name="com.epam.reportportal.testng.ReportPortalTestNGListener"/>
 	</listeners>
-	<#list devicesInformation as device>
+	<#list devices as device>
 		<test name="Tests on ${device.deviceName}" preserve-order="true">
 			<parameter name="platformName" value="${device.platformName}"/>
 			<parameter name="deviceId" value="${device.deviceId}"/>

@@ -2,13 +2,11 @@ package keywords;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -22,7 +20,7 @@ public class Logs {
 	@Inject
 	MobileActions mobileActions;
 
-	LogEntries logEntries;
+	final LogEntries logEntries;
 
 	@Inject
 	public Logs(AppiumDriver driver) {

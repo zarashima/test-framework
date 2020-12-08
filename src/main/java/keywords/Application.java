@@ -5,13 +5,13 @@ import com.google.inject.Inject;
 import ensure.Wait;
 import helper.StringConstants;
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 
 import java.net.URL;
 import java.time.Duration;
 import java.util.HashMap;
-import java.util.List;
 
 public class Application {
 
@@ -99,10 +99,7 @@ public class Application {
 		return driver.getCapabilities().getCapability("appActivity").toString();
 	}
 
-	public List<List<Object>> getPerformanceData(String packageName, String dataType, int dataReadTimeout) {
-		if (device.isAndroid())
-			return ((AndroidDriver) driver).getPerformanceData(packageName, dataType, dataReadTimeout);
-		else
-			throw new UnsupportedOperationException("iOS is not supported");
+	public void startActivity(String appPackage, String appActivity) {
+		((AndroidDriver)driver).startActivity(new Activity(appPackage, appActivity));
 	}
 }

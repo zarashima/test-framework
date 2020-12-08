@@ -236,13 +236,6 @@
 
 		<dependency>
 			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-junit</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>info.cukes</groupId>
 			<artifactId>cucumber-picocontainer</artifactId>
 			<version>1.2.5</version>
 			<scope>test</scope>
@@ -277,6 +270,12 @@
 			<artifactId>cucumber-testng</artifactId>
 			<version>1.2.5</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.influxdb</groupId>
+			<artifactId>influxdb-java</artifactId>
+			<version>2.12</version>
 		</dependency>
 
 	</dependencies>

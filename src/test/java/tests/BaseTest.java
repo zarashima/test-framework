@@ -1,7 +1,5 @@
 package tests;
 
-import appiumdriver.DriverFactory;
-import appiumdriver.DriverManager;
 import com.epam.reportportal.service.tree.ItemTreeReporter;
 import com.epam.reportportal.service.tree.TestItemTree;
 import com.epam.reportportal.testng.TestNGService;
@@ -10,6 +8,9 @@ import com.epam.ta.reportportal.ws.model.FinishTestItemRQ;
 import com.epam.ta.reportportal.ws.model.attribute.ItemAttributesRQ;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import drivers.Device;
+import drivers.DriverFactory;
+import drivers.DriverManager;
 import extentreports.ExtentTestManager;
 import io.appium.java_client.AppiumDriver;
 import keywords.*;
@@ -21,9 +22,7 @@ import pages.HomeScreen;
 import reportportal.SessionContext;
 import server.AppiumServerManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Set;
 
 import static com.epam.reportportal.testng.TestNGService.ITEM_TREE;
@@ -38,6 +37,7 @@ public class BaseTest {
 	protected HomeScreen homeScreen;
 	protected Logs logsKeyword;
 	protected Application applicationKeywords;
+	protected Device device;
 
 	@BeforeSuite
 	public void beforeSuite() {
@@ -45,10 +45,11 @@ public class BaseTest {
 	}
 
 	@BeforeTest
-	@Parameters({"platformName", "deviceId", "deviceName"})
-	public void beforeTest(String platformName, String deviceId, String deviceName) {
+	@Parameters({"platformName", "deviceId", "deviceName", "deviceVersion"})
+	public void beforeTest(String platformName, String deviceId, String deviceName, String deviceVersion) {
 		Injector injector = Guice.createInjector(new DriverModule());
-		driver = DriverFactory.createInstance(platformName, deviceId, deviceName);
+		device = new Device(platformName, deviceName, deviceId, deviceVersion);
+		driver = DriverFactory.createInstance(device);
 		DriverManager.setDriver(driver);
 		homeScreen = injector.getInstance(HomeScreen.class);
 		browserKeywords = injector.getInstance(Browser.class);
@@ -79,11 +80,13 @@ public class BaseTest {
 
 	private void sendFinishRequest(TestItemTree.TestItemLeaf testResultLeaf, ITestResult testResult) {
 		FinishTestItemRQ finishTestItemRQ = new FinishTestItemRQ();
-		Set<ItemAttributesRQ> testItemAttributes =  Sets.newHashSet(new ItemAttributesRQ("device", DriverManager.getDeviceName()));
+		Set<ItemAttributesRQ> testItemAttributes =  Sets.newHashSet(new ItemAttributesRQ("device",
+				testResult.getTestContext().getCurrentXmlTest().getParameter("deviceName")));
+		testItemAttributes.add(new ItemAttributesRQ("session_id", DriverManager.getSessionID()));
 		testItemAttributes.add(new ItemAttributesRQ("platform", DriverManager.getPlatformName()));
+		testItemAttributes.add(new ItemAttributesRQ("version", DriverManager.getVersion()));
 		finishTestItemRQ.setAttributes(testItemAttributes);
 		finishTestItemRQ.setStatus(testResult.isSuccess() ? "PASSED" : "FAILED");
-		finishTestItemRQ.setDescription(testResult.getMethod().getDescription());
 		finishTestItemRQ.setEndTime(Calendar.getInstance().getTime());
 		ItemTreeReporter.finishItem(TestNGService.getReportPortal().getClient(), finishTestItemRQ, ITEM_TREE.getLaunchId(), testResultLeaf)
 				.cache()
