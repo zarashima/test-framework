@@ -2,10 +2,10 @@ package modules;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import drivers.DriverManager;
 import ensure.Wait;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.JavascriptExecutor;
-import appiumdriver.DriverManager;
 
 public class DriverModule extends AbstractModule {
 

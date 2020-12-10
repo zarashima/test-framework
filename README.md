@@ -1,5 +1,5 @@
 # Overview
-A mobile automation framework to aid in testers. It provides a basic skeleton for Appium-based framework implementations.
+A mobile automation framework to aid in testers for mobile automation
 
 # Features
 * Auto detect plugged in real Android/iOS devices and make corresponding executions
@@ -18,6 +18,7 @@ A mobile automation framework to aid in testers. It provides a basic skeleton fo
 * Freemaker
 * [MobileDeviceInfo](https://github.com/Testinium/MobileDeviceInfo)
 * ReportPortal
+* Snake-YAML
 
 # Prerequistes
 * Appium 1.16+
@@ -79,6 +80,8 @@ browserstacks:
 The project used ReportPortal(RP) to centralized execution. It aids in the ability to add meta information regards to the devices under test such as name, platform, session ID after a test method in TestNG is executed (See BaseTest.java for more details)
 RP settings are located in resources/reportportal.properties and is RP compliance settings. By default, this integration is disabled.
 
+Update meta information: Once the tests finished, its meta information (at the moment it is device name, version, platform and session ID)
+
 ## Test Suite Usage
 src/test/resources folder holds Runner TestNG XML file and .ftl files. Runner file execute TestRunner test which will transform .ftl files(FreeMaker) into TestNG XML suite files.
 More tests can be added by adding more <test> tags to preserve the parallel executions mechanism and auto retrieve devices information from the capabilities file.
@@ -116,7 +119,6 @@ Example: Add another sample test (SampleTest2) to the suite:
 </suite>
 ```
 
-
 ## Execution
 The project uses maven for execution. Each capabilities parameters above can be override easily through the command line.
 
@@ -124,13 +126,29 @@ Parameters used in the command:
 - suite: Test suite runner name to transform test suite template into executable TestNG compliance XML file. Should always be Runner.
 - testSuiteTemplate: Test suite template's name which hold information regard to executed tests.
 
-Default mvn command without override
+The execution mechanism supports parameterized parameters through maven command line.
+
+Without override
 `mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName>`
 
-mvn command to override capabilities:
+### Local devices
+To override local devices capabilities, pass in capabilities name with its value in the command line. Some examples:
+- Change application:
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dapp="app/TheApp-v2.apk"`
+
+- Change automationName:
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -DautomationName="Appium"`
+
+### Browserstack
+To override Browserstack(bs) capabilities, add "bs." prefix before the name along with its value in the command line. Some examples:
 - Disable browserstack integration
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Denabled=false`
 
-- Change browserstack's project name
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dproject="Automation Project"`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dbs.enabled=false`
 
+- Change browserstack project name
+
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dbs.project="Automation Project"`
+
+- To change browserstack list, pass the list of devices in JSON format, e.g
+
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite2 -Dbs.project="Automation Project" -Dbs.devices="[{'device':'Samsung Galaxy A10', 'os_version':'9.0'}, {'device':'Google Pixel 3', 'os_version':'9.0'}]"`

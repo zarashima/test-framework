@@ -1,8 +1,11 @@
 package config;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import helper.Platform;
 import utils.YamlUtils;
 
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -14,25 +17,30 @@ public class BrowserStackConfig {
 	private BrowserStackConfig(){}
 
 	private static final Map<String, Object> browserStacksNode;
+	private static final String bsPrefix = "bs.";
 
 	static {
 		browserStacksNode = YamlUtils.getInstance().getNodeFromKey(Platform.BROWSERSTACKS.platformName);
 	}
 
 	public static boolean isEnabled() {
-		return Optional.ofNullable(System.getProperty("enabled"))
+		return Optional.ofNullable(System.getProperty(bsPrefix + "enabled"))
 				.orElse((String) browserStacksNode.get("enabled")).equals("true");
 	}
 
 	public static List<Map<String, String>> getDevices() {
-		return (List<Map<String, String>>) browserStacksNode.get("devices");
+		Gson gson = new Gson();
+		Type resultType = new TypeToken<List<Map<String, String>>>(){}.getType();
+		List<Map<String, String>> results = gson.fromJson(System.getProperty("bs.devices"), resultType);
+		return (Optional.ofNullable(results).orElse((List<Map<String, String>>)
+				browserStacksNode.get("devices")));
 	}
 
 	public static Map<String, Object> getSettings() {
 		return browserStacksNode.entrySet()
 				.stream().filter(s -> !s.getKey().equals("devices"))
 				.collect(Collectors.toMap(Map.Entry::getKey,
-						s -> Optional.ofNullable(System.getProperty(s.getKey())).orElse((String) s.getValue())));
+						s -> Optional.ofNullable(System.getProperty(bsPrefix + s.getKey())).orElse((String) s.getValue())));
 	}
 
 	public static String getUserName() {

@@ -1,6 +1,6 @@
 android:
     app: "app/TheApp-v1.10.0.apk"
-    autoGrantPermissions: true
+    autoGrantPermissions: "true"
     newCommandTimeout: "3600"
     eventTimings: true
     automationName: "UIAutomator2"
@@ -11,7 +11,7 @@ iOS:
     appPackage:
     appActivity:
 browserstacks:
-    enabled: true
+    enabled: "true"
     project: "My First Project"
     build: "My First Build"
     name: "Sample Test"
