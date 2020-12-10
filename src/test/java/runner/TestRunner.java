@@ -40,14 +40,17 @@ public class TestRunner {
 		templateProcessor.setUp();
 		Template template = templateProcessor.getTemplate(ExecutionUtils.getParameter("testSuiteTemplate") + ".ftl");
 		SuiteTemplate suiteTemplate = new SuiteTemplate(template, templateData);
-		DeviceInfo deviceInfo = new DeviceInfoImpl(DeviceType.ALL);
+
 		List<Device> devices = new ArrayList<>();
 
 		// Add local devices
-		if (deviceInfo.anyDeviceConnected()) {
-			for (com.testinium.deviceinformation.model.Device device : deviceInfo.getDevices()) {
-				devices.add(new Device(device.getDeviceProductName(), device.getModelNumber(),
-						device.getUniqueDeviceID(), device.getProductVersion()));
+		if (System.getProperty("local").equals("true")) {
+			DeviceInfo deviceInfo = new DeviceInfoImpl(DeviceType.ALL);
+			if (deviceInfo.anyDeviceConnected()) {
+				for (com.testinium.deviceinformation.model.Device device : deviceInfo.getDevices()) {
+					devices.add(new Device(device.getDeviceProductName(), device.getModelNumber(),
+							device.getUniqueDeviceID(), device.getProductVersion()));
+				}
 			}
 		}
 

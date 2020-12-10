@@ -46,7 +46,8 @@ public class BaseTest {
 
 	@BeforeSuite
 	public void beforeSuite() {
-		AppiumServerManager.startAppiumServer();
+		if (System.getProperty("local").equals("true"))
+			AppiumServerManager.startAppiumServer();
 	}
 
 	@BeforeTest

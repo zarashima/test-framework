@@ -6,10 +6,11 @@ import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
 public class AppiumServerManager {
 	private static AppiumDriverLocalService appiumDriverLocalService;
-	private static AppiumServiceBuilder appiumServiceBuilder;
+
+	private AppiumServerManager() {}
 
 	public static void startAppiumServer() {
-		appiumServiceBuilder = new AppiumServiceBuilder();
+		AppiumServiceBuilder appiumServiceBuilder = new AppiumServiceBuilder();
 		appiumServiceBuilder.usingAnyFreePort()
 				.withArgument(GeneralServerFlag.LOG_TIMESTAMP)
 				.withArgument(GeneralServerFlag.LOCAL_TIMEZONE)

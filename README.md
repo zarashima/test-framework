@@ -129,26 +129,29 @@ Parameters used in the command:
 The execution mechanism supports parameterized parameters through maven command line.
 
 Without override
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName>`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dlocal=true`
 
 ### Local devices
+To use local devices , pass `local=true` to maven command, e.g:
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dlocal=true`
+
 To override local devices capabilities, pass in capabilities name with its value in the command line. Some examples:
 - Change application:
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dapp="app/TheApp-v2.apk"`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dlocal=true -Dapp="app/TheApp-v2.apk"`
 
 - Change automationName:
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -DautomationName="Appium"`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dlocal=true -DautomationName="Appium"`
 
 ### Browserstack
 To override Browserstack(bs) capabilities, add "bs." prefix before the name along with its value in the command line. Some examples:
 - Disable browserstack integration
 
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dbs.enabled=false`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dlocal=true -Dbs.enabled=false`
 
 - Change browserstack project name
 
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dbs.project="Automation Project"`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=<SuiteName> -Dlocal=true -Dbs.project="Automation Project"`
 
 - To change browserstack list, pass the list of devices in JSON format, e.g
 
-`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite2 -Dbs.project="Automation Project" -Dbs.devices="[{'device':'Samsung Galaxy A10', 'os_version':'9.0'}, {'device':'Google Pixel 3', 'os_version':'9.0'}]"`
+`mvn clean test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite2 -Dlocal=true -Dbs.project="Automation Project" -Dbs.devices="[{'device':'Samsung Galaxy A10', 'os_version':'9.0'}, {'device':'Google Pixel 3', 'os_version':'9.0'}]"`
