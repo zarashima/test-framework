@@ -1,7 +1,4 @@
-# This workflow will build a Java project with Maven
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
-
-name: Java CI with Maven
+name: Maven Test
 
 on:
   push:
@@ -20,8 +17,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - uses: actions/cache@v1
+      with:
+       path: ~/.m2/repository
+       key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+       restore-keys: |
+         ${{ runner.os }}-maven-  
     - name: Install and Run Appium Server
-      uses: moatazeldebsy/appium-server-gitHub-action@V1.0.4 
+      uses: moatazeldebsy/appium-server-gitHub-action@V1.0.5 
     - name: Build with Maven
-      run: mvn clean test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite
+      run: mvn clean test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite -Dbs.enabled=true -Dlocal=false
    
