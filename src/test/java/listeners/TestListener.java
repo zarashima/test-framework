@@ -8,14 +8,12 @@ import drivers.DriverManager;
 import extentreports.ExtentManager;
 import extentreports.ExtentTestManager;
 import org.apache.commons.io.FileUtils;
-import org.influxdb.dto.Point;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
 import utils.LogUtils;
-import utils.UpdateResults;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,21 +71,5 @@ public class TestListener implements ITestListener {
 	public synchronized void onFinish(ITestContext context) {
 		extentreports.ExtentTestManager.endTest();
 		ExtentManager.getInstance().flush();
-	}
-
-	private void postTestMethodStatus(ITestResult iTestResult, String status) {
-		Point point = Point.measurement("testmethod").time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-				.tag("testclass", iTestResult.getTestClass().getName()).tag("name", iTestResult.getName())
-				.tag("description", iTestResult.getMethod().getDescription()).tag("result", status)
-				.addField("duration", (iTestResult.getEndMillis() - iTestResult.getStartMillis())).build();
-		UpdateResults.post(point);
-	}
-
-	private void postTestClassStatus(ITestContext iTestContext) {
-		Point point = Point.measurement("testclass").time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-				.tag("name", iTestContext.getAllTestMethods()[0].getTestClass().getName())
-				.addField("duration", (iTestContext.getEndDate().getTime() - iTestContext.getStartDate().getTime()))
-				.build();
-		UpdateResults.post(point);
 	}
 }
