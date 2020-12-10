@@ -8,17 +8,17 @@ public class ExecutionUtils {
 	public static synchronized String getParameter(String name) {
 		String value = System.getProperty(name);
 		if (value == null)
-			throw new RuntimeException(name + " is not a parameter!");
+			throw new IllegalArgumentException(name + " is not a parameter!");
 		if (value.isEmpty())
-			throw new RuntimeException(name + " is empty!");
+			throw new IllegalArgumentException(name + " is empty!");
 		return value;
 	}
 
 	public static synchronized void setParameter(String key, String name) {
 		if (key == null)
-			throw new RuntimeException(name + " is not a parameter!");
+			throw new IllegalArgumentException(name + " is not a parameter!");
 		if (key.isEmpty())
-			throw new RuntimeException(name + " is empty!");
+			throw new IllegalArgumentException(name + " is empty!");
 		System.setProperty(key, name);
 	}
 

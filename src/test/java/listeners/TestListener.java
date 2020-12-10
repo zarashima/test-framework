@@ -39,7 +39,7 @@ public class TestListener implements ITestListener {
 	@Override
 	public synchronized void onTestFailure(ITestResult result) {
 		ExtentTestManager.getTest().log(Status.FAIL,
-				MarkupHelper.createLabel(result.getName() + " - Test Case Failed", ExtentColor.RED));
+				MarkupHelper.createLabel(result.getName() + " - Test Case Failed - Reason: " + result.getThrowable().toString(), ExtentColor.RED));
 		try {
 			String base64StringOfScreenshots;
 			TakesScreenshot screenshot = (TakesScreenshot) DriverManager.getDriver();
@@ -56,6 +56,8 @@ public class TestListener implements ITestListener {
 
 	@Override
 	public synchronized void onTestSkipped(ITestResult result) {
+		ExtentTestManager.getTest().log(Status.SKIP,
+				MarkupHelper.createLabel(result.getName() + " - Test Case Skipped - Reason: " + result.getThrowable().toString(), ExtentColor.YELLOW));
 	}
 
 	@Override
