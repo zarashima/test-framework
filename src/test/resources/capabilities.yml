@@ -11,7 +11,7 @@ iOS:
     appPackage:
     appActivity:
 browserstacks:
-    enabled: "true"
+    enabled: "false"
     project: "My First Project"
     build: "My First Build"
     name: "Sample Test"

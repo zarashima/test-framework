@@ -22,7 +22,7 @@ public class ExecutionUtils {
 		System.setProperty(key, name);
 	}
 
-	public static synchronized Object getEnv(String envName) {
+	public static synchronized String getEnv(String envName) {
 		return System.getenv(envName);
 	}
 }

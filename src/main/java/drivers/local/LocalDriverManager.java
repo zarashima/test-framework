@@ -3,6 +3,7 @@ package drivers.local;
 import drivers.Device;
 import drivers.IDriver;
 import drivers.remote.BrowserStackDriverManager;
+import helper.Platform;
 import io.appium.java_client.AppiumDriver;
 
 public class LocalDriverManager implements IDriver {
@@ -16,7 +17,7 @@ public class LocalDriverManager implements IDriver {
 			case "iOS":
 				driver = new iOSDriverManager().createDriver(device);
 				break;
-			case "browserstacks":
+			case "browserstack":
 				driver = new BrowserStackDriverManager().createDriver(device);
 				break;
 			default:

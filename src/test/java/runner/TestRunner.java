@@ -57,7 +57,7 @@ public class TestRunner {
 		// Add remote devices
 		if (BrowserStackConfig.isEnabled()) {
 			for (Map<String, String> device : BrowserStackConfig.getDevices()) {
-				devices.add(new Device(Platform.BROWSERSTACKS.name(), device.get("device"), "", device.get("os_version")));
+				devices.add(new Device(Platform.BROWSERSTACK.name(), device.get("device"), "", device.get("os_version")));
 			}
 		}
 
