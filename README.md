@@ -1,4 +1,7 @@
 # Overview
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb00f5efb3cd4757b621b04c440fa161)](https://app.codacy.com/gh/zarashima/appium-test-framework?utm_source=github.com&utm_medium=referral&utm_content=zarashima/appium-test-framework&utm_campaign=Badge_Grade)
+
 A mobile automation framework to aid in testers for mobile automation
 
 # Features
