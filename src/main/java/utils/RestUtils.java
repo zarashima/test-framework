@@ -20,12 +20,12 @@ public class RestUtils {
 		}
 	}
 
-	private RestUtils() { }
-
 	public static String path;
 	public static Response response;
 	public static RequestSpecification requestSpecification;
 	public static final RequestSpecBuilder builder = new RequestSpecBuilder();
+
+	private RestUtils() { }
 
 	public static void setHeader(String key, String value) {
 		builder.addHeader(key, value);

@@ -7,9 +7,9 @@ import utils.ReportUtils;
 
 public class ExtentManager {
 
-	private ExtentManager() {}
-
 	private static ExtentReports extent;
+
+	private ExtentManager() {}
 
 	public static ExtentReports getInstance() {
 		if (extent == null)

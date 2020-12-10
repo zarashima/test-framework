@@ -2,7 +2,11 @@ package pages;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import keywords.*;
+import keywords.Browser;
+import keywords.Context;
+import keywords.Device;
+import keywords.MobileActions;
+import keywords.Clipboard;
 
 public class BaseScreen {
 
