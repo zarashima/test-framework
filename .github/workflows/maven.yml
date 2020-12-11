@@ -22,9 +22,12 @@ jobs:
        path: ~/.m2/repository
        key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
        restore-keys: |
-         ${{ runner.os }}-maven-  
+         ${{ runner.os }}-maven-
     - name: Install and Run Appium Server
-      uses: moatazeldebsy/appium-server-gitHub-action@V1.0.5 
+      uses: moatazeldebsy/appium-server-gitHub-action@V1.0.5
+    - name: Set environment variables
+      run: |
+        export BROWSERSTACK_USERNAME=vinhnguyen5
+        export BROWSERSTACK_ACCESS_KEY=BGXjQCA1xCVc7JKsh2ez
     - name: Build with Maven
       run: mvn clean test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite -Dbs.enabled=true -Dlocal=false
-   
