@@ -14,7 +14,7 @@ public class LocalDriverManager implements IDriver {
 			case "android":
 				driver = new AndroidDriverManager().createDriver(device);
 				break;
-			case "iOS":
+			case "ios":
 				driver = new iOSDriverManager().createDriver(device);
 				break;
 			case "browserstack":
