@@ -7,4 +7,4 @@ workflows:
   maven_test:
     jobs:
       - maven/test: # checkout, build, test, and upload test results
-          command: '-Dsuite=Runner -DtestSuiteTemplate=SmokeSuite -Dlocal=false -Dbs.enabled=true -Dusername=vinhnguyen5 -DaccessKey=BGXjQCA1xCVc7JKsh2ez'
+          command: 'test -Dsuite=Runner -DtestSuiteTemplate=SmokeSuite -Dlocal=false -Dbs.enabled=true -Dusername=vinhnguyen5 -DaccessKey=BGXjQCA1xCVc7JKsh2ez'
