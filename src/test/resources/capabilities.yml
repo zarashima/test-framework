@@ -16,8 +16,8 @@ browserstacks:
     build: "My First Build"
     name: "Sample Test"
     automationName: "UIAutomator2"
-    username: "vinhnguyen5"
-    accessKey: "BGXjQCA1xCVc7JKsh2ez"
+    username: <BROWSERSTACK_USERNAME>
+    accessKey: <BROWSERSTACK_ACCESS_KEY>
     browserstack.debug: "true"
     app: "bs://7e34e875691d99ce98ae30ac006dfaaffe3f738a"
     devices:
