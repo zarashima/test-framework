@@ -12,8 +12,4 @@ public class HomeScreen extends BaseScreen {
 		super(driver);
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
-
-	public void test() throws InterruptedException {
-		browser.startBrowser();
-	}
 }
