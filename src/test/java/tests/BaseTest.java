@@ -60,6 +60,7 @@ public class BaseTest {
 		verificationKw = injector.getInstance(Verification.class);
 		applicationKw = injector.getInstance(Application.class);
 		clipboardKw = injector.getInstance(Clipboard.class);
+		performanceKw = injector.getInstance(Performance.class);
 	}
 
 	@AfterMethod()
