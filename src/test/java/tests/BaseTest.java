@@ -13,12 +13,7 @@ import drivers.DriverFactory;
 import drivers.DriverManager;
 import extentreports.ExtentTestManager;
 import io.appium.java_client.AppiumDriver;
-import keywords.Browser;
-import keywords.Clipboard;
-import keywords.Element;
-import keywords.Verification;
-import keywords.Application;
-import keywords.Logs;
+import keywords.*;
 import modules.DriverModule;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -35,14 +30,15 @@ import static com.epam.reportportal.testng.TestNGService.ITEM_TREE;
 public class BaseTest {
 
 	protected AppiumDriver<?> driver;
-	protected Browser browserKeywords;
-	protected Element elementKeywords;
-	protected Verification verificationKeywords;
-	protected Clipboard clipboardKeywords;
-	protected HomeScreen homeScreen;
-	protected Logs logsKeyword;
-	protected Application applicationKeywords;
+	protected Browser browserKw;
+	protected Element elementKw;
+	public Verification verificationKw;
+	protected Clipboard clipboardKw;
+	protected Logs logsKw;
+	public Application applicationKw;
+	protected Performance performanceKw;
 	protected Device device;
+	protected HomeScreen homeScreen;
 
 	@BeforeSuite
 	public void beforeSuite() {
@@ -58,12 +54,12 @@ public class BaseTest {
 		driver = DriverFactory.createInstance(device);
 		DriverManager.setDriver(driver);
 		homeScreen = injector.getInstance(HomeScreen.class);
-		browserKeywords = injector.getInstance(Browser.class);
-		elementKeywords = injector.getInstance(Element.class);
-		logsKeyword = injector.getInstance(Logs.class);
-		verificationKeywords = injector.getInstance(Verification.class);
-		applicationKeywords = injector.getInstance(Application.class);
-		clipboardKeywords = injector.getInstance(Clipboard.class);
+		browserKw = injector.getInstance(Browser.class);
+		elementKw = injector.getInstance(Element.class);
+		logsKw = injector.getInstance(Logs.class);
+		verificationKw = injector.getInstance(Verification.class);
+		applicationKw = injector.getInstance(Application.class);
+		clipboardKw = injector.getInstance(Clipboard.class);
 	}
 
 	@AfterMethod()

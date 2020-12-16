@@ -2,11 +2,7 @@ package pages;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
-import keywords.Browser;
-import keywords.Context;
-import keywords.Device;
-import keywords.MobileActions;
-import keywords.Clipboard;
+import keywords.*;
 
 public class BaseScreen {
 
@@ -17,13 +13,16 @@ public class BaseScreen {
 	protected Device device;
 
 	@Inject
-	protected Browser browser;
+	protected Browser browserKw;
 
 	@Inject
 	protected MobileActions mobileActions;
 
 	@Inject
-	protected Clipboard clipboard;
+	protected Clipboard clipboardKw;
+
+	@Inject
+	protected Performance performanceKw;
 
 	@Inject
 	protected AppiumDriver driver;
