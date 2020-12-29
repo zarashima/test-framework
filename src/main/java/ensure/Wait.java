@@ -11,7 +11,10 @@ import utils.LogUtils;
 import utils.PropertyUtils;
 import utils.WebElementUtils;
 
+import java.time.Duration;
 import java.util.List;
+
+import static org.awaitility.Awaitility.await;
 
 public class Wait {
 
@@ -29,29 +32,29 @@ public class Wait {
 
 	public void waitForElementDisplay(WebElement element) {
 		LogUtils.info(waitPrefix + WebElementUtils.getElementXpathInfo(element) + " to display");
-		webDriverWait.until(ExpectedConditions.visibilityOf(element));
-	}
-
-	public void waitForElementsDisplay(List<WebElement> elements) {
-		LogUtils.info(waitPrefix + WebElementUtils.getElementsXpathInfo(elements) + " to display");
-		webDriverWait.until(ExpectedConditions.visibilityOfAllElements(elements));
+		await().atMost(Duration.ofSeconds(PropertyUtils.getInstance().getTimeout()))
+				.until(element::isDisplayed);
 	}
 
 	public void waitForElementEnabled(WebElement element) {
 		LogUtils.info(waitPrefix + WebElementUtils.getElementXpathInfo(element) + " to be enabled");
-		webDriverWait.until(ExpectedConditions.visibilityOf(element)).isEnabled();
+		await().atMost(Duration.ofSeconds(PropertyUtils.getInstance().getTimeout()))
+				.until(element::isEnabled);
 	}
 
 	public void waitForElementClickable(WebElement element) {
 		LogUtils.info(waitPrefix + WebElementUtils.getElementXpathInfo(element) + " to be clickable");
-		webDriverWait.until(ExpectedConditions.elementToBeClickable(element));
+		await().atMost(Duration.ofSeconds(PropertyUtils.getInstance().getTimeout())).until(() -> {
+			element.click();
+			return true;
+		});
 	}
 
 	public void waitForPageLoad() {
 		LogUtils.info("Wait for page load");
-		ExpectedCondition<Boolean> javaScriptLoad = webDriver ->
-				((JavascriptExecutor) (webDriver)).executeScript("return document.readyState").equals("complete");
-		webDriverWait.until(javaScriptLoad);
+		await().atMost(Duration.ofSeconds(PropertyUtils.getInstance().getTimeout())).until(() -> {
+			return ((JavascriptExecutor)this.driver).executeScript("return document.readyState").equals("complete");
+		});
 	}
 
 	public void waitUntilDisplayIsNone(WebElement element) {
