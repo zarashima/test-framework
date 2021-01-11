@@ -12,13 +12,18 @@ import drivers.Device;
 import drivers.DriverFactory;
 import drivers.DriverManager;
 import extentreports.ExtentTestManager;
-import io.appium.java_client.AppiumDriver;
-import keywords.*;
+import keywords.mobile.Performance;
+import keywords.common.Element;
+import keywords.common.Verification;
+import keywords.mobile.Application;
+import keywords.mobile.Clipboard;
+import keywords.mobile.DeviceKW;
+import keywords.web.Browser;
 import modules.DriverModule;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.collections.Sets;
-import pages.HomeScreen;
 import reportportal.SessionContext;
 import server.AppiumServerManager;
 
@@ -29,16 +34,15 @@ import static com.epam.reportportal.testng.TestNGService.ITEM_TREE;
 
 public class BaseTest {
 
-	protected AppiumDriver<?> driver;
+	protected RemoteWebDriver driver;
 	protected Browser browserKw;
 	protected Element elementKw;
 	public Verification verificationKw;
 	protected Clipboard clipboardKw;
-	protected Logs logsKw;
 	public Application applicationKw;
 	protected Performance performanceKw;
 	protected Device device;
-	protected HomeScreen homeScreen;
+	protected DeviceKW deviceKw;
 
 	@BeforeSuite
 	public void beforeSuite() {
@@ -53,17 +57,15 @@ public class BaseTest {
 		device = new Device(platformName, deviceName, deviceId, deviceVersion);
 		driver = DriverFactory.createInstance(device);
 		DriverManager.setDriver(driver);
-		homeScreen = injector.getInstance(HomeScreen.class);
+		deviceKw = injector.getInstance(DeviceKW.class);
 		browserKw = injector.getInstance(Browser.class);
 		elementKw = injector.getInstance(Element.class);
-		logsKw = injector.getInstance(Logs.class);
 		verificationKw = injector.getInstance(Verification.class);
 		applicationKw = injector.getInstance(Application.class);
 		clipboardKw = injector.getInstance(Clipboard.class);
 		performanceKw = injector.getInstance(Performance.class);
 	}
 
-	@AfterMethod()
 	public void afterMethod(ITestResult testResult) {
 		if (SessionContext.getRpEnable()) {
 			ItemTreeUtils.retrieveLeaf(testResult, ITEM_TREE).ifPresent(testResultLeaf -> sendFinishRequest(testResultLeaf, testResult));
@@ -83,11 +85,11 @@ public class BaseTest {
 
 	private void sendFinishRequest(TestItemTree.TestItemLeaf testResultLeaf, ITestResult testResult) {
 		FinishTestItemRQ finishTestItemRQ = new FinishTestItemRQ();
-		Set<ItemAttributesRQ> testItemAttributes =  Sets.newHashSet(new ItemAttributesRQ("device",
+		Set<ItemAttributesRQ> testItemAttributes = Sets.newHashSet(new ItemAttributesRQ("deviceKW",
 				testResult.getTestContext().getCurrentXmlTest().getParameter("deviceName")));
 		testItemAttributes.add(new ItemAttributesRQ("session_id", DriverManager.getSessionID()));
-		testItemAttributes.add(new ItemAttributesRQ("platform", DriverManager.getPlatformName()));
-		testItemAttributes.add(new ItemAttributesRQ("version", DriverManager.getVersion()));
+		testItemAttributes.add(new ItemAttributesRQ("platform", deviceKw.getPlatformName()));
+		testItemAttributes.add(new ItemAttributesRQ("version", deviceKw.getVersion()));
 		finishTestItemRQ.setAttributes(testItemAttributes);
 		finishTestItemRQ.setStatus(testResult.isSuccess() ? "PASSED" : "FAILED");
 		finishTestItemRQ.setEndTime(Calendar.getInstance().getTime());

@@ -1,8 +1,8 @@
-package keywords;
+package keywords.common;
 
 import com.google.inject.Inject;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.LogUtils;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -12,10 +12,10 @@ public class Verification {
 	protected WebElement element;
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	public Verification(AppiumDriver driver) {
+	public Verification(RemoteWebDriver driver) {
 		this.driver = driver;
 	}
 

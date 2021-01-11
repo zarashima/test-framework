@@ -39,7 +39,7 @@ public class RestUtils {
 		builder.setBasePath(basePathTerm);
 	}
 
-	public static void  createSearchQueryPath(String searchTerm, String jsonPathTerm, String param, String paramValue) {
+	public static void createSearchQueryPath(String searchTerm, String jsonPathTerm, String param, String paramValue) {
 		path = searchTerm + "/" + jsonPathTerm + "?" + param + "=" + paramValue;
 	}
 
@@ -47,7 +47,7 @@ public class RestUtils {
 		builder.setBody(body);
 	}
 
-	public static void resetBaseURI () {
+	public static void resetBaseURI() {
 		builder.setBaseUri("");
 	}
 
@@ -55,23 +55,19 @@ public class RestUtils {
 		builder.setBasePath("");
 	}
 
-	public static void setContentType (ContentType type) {
+	public static void setContentType(ContentType type) {
 		builder.setContentType(type);
 	}
 
 	public static Response send(HttpMethod method, JSONObject requestBody) {
 		response = null;
 		requestSpecification = builder.build();
-		if (method == HttpMethod.POST)
-		{
+		if (method == HttpMethod.POST) {
 			builder.setBody(requestBody);
 			response = RestAssured.given().spec(requestSpecification).post();
-		}
-		else if (method == HttpMethod.GET)
-		{
+		} else if (method == HttpMethod.GET) {
 			response = RestAssured.given().spec(requestSpecification).get();
-		}
-		else if (method == HttpMethod.PUT) {
+		} else if (method == HttpMethod.PUT) {
 			builder.setBody(requestBody);
 			response = RestAssured.given().spec(requestSpecification).put();
 		}

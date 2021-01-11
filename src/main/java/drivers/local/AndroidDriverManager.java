@@ -2,9 +2,9 @@ package drivers.local;
 
 import drivers.Device;
 import helper.Platform;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import server.AppiumServerManager;
 import utils.YamlUtils;
 
@@ -20,10 +20,9 @@ import static io.appium.java_client.remote.MobileCapabilityType.DEVICE_NAME;
 import static io.appium.java_client.remote.MobileCapabilityType.UDID;
 import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
 
-
 public class AndroidDriverManager {
-	public AppiumDriver createDriver(Device device) {
-		AppiumDriver driver = null;
+	public RemoteWebDriver createDriver(Device device) {
+		RemoteWebDriver driver = null;
 		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 		desiredCapabilities.setCapability(PLATFORM_NAME, device.getPlatformName());
 		desiredCapabilities.setCapability(DEVICE_NAME, device.getDeviceName());
@@ -36,8 +35,7 @@ public class AndroidDriverManager {
 					desiredCapabilities.setCapability(entry.getKey(), FileSystems.getDefault()
 							.getPath((String) entry.getValue())
 							.toAbsolutePath().normalize().toString());
-				}
-				else
+				} else
 					desiredCapabilities.setCapability(entry.getKey(), entry.getValue());
 			}
 			driver = new AndroidDriver<>(new URL(AppiumServerManager.getAppiumServerAddress()), desiredCapabilities);

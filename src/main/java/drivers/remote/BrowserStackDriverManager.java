@@ -1,17 +1,18 @@
 package drivers.remote;
 
-import drivers.Device;
 import config.BrowserStackConfig;
+import drivers.Device;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 
 public class BrowserStackDriverManager {
-	public AppiumDriver createDriver(Device device) {
+	public RemoteWebDriver createDriver(Device device) {
 		AppiumDriver driver = null;
 		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 		desiredCapabilities.setCapability("device", device.getDeviceName());

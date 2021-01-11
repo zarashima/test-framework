@@ -1,10 +1,9 @@
 package ensure;
 
 import com.google.inject.Inject;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.LogUtils;
@@ -12,7 +11,6 @@ import utils.PropertyUtils;
 import utils.WebElementUtils;
 
 import java.time.Duration;
-import java.util.List;
 
 import static org.awaitility.Awaitility.await;
 
@@ -22,10 +20,10 @@ public class Wait {
 	private final String waitPrefix = "Wait for ";
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	public Wait(AppiumDriver driver) {
+	public Wait(RemoteWebDriver driver) {
 		this.webDriverWait = new WebDriverWait(driver, PropertyUtils.getInstance().getTimeout());
 		this.driver = driver;
 	}
@@ -53,7 +51,7 @@ public class Wait {
 	public void waitForPageLoad() {
 		LogUtils.info("Wait for page load");
 		await().atMost(Duration.ofSeconds(PropertyUtils.getInstance().getTimeout())).until(() -> {
-			return ((JavascriptExecutor)this.driver).executeScript("return document.readyState").equals("complete");
+			return ((JavascriptExecutor) this.driver).executeScript("return document.readyState").equals("complete");
 		});
 	}
 

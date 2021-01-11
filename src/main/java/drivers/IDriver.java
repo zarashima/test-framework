@@ -24,8 +24,8 @@
 
 package drivers;
 
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public interface IDriver {
-	AppiumDriver createInstance(Device device);
+	RemoteWebDriver createInstance(Device device);
 }

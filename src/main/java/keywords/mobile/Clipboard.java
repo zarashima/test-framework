@@ -1,17 +1,17 @@
-package keywords;
+package keywords.mobile;
 
 import com.google.inject.Inject;
 import ensure.Wait;
-import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.clipboard.HasClipboard;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class Clipboard {
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	Device device;
+	DeviceKW deviceKW;
 
 	@Inject
 	MobileActions mobileActions;
@@ -20,7 +20,7 @@ public class Clipboard {
 	Wait wait;
 
 	@Inject
-	public Clipboard(AppiumDriver driver) {
+	public Clipboard(RemoteWebDriver driver) {
 		this.driver = driver;
 		wait = new Wait(driver);
 	}

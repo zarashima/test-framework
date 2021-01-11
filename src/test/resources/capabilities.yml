@@ -1,27 +1,30 @@
 android:
-    app: "app/TheApp-v1.10.0.apk"
-    autoGrantPermissions: "true"
-    newCommandTimeout: "3600"
-    eventTimings: true
-    automationName: "UIAutomator2"
-    fullReset: true
-    noReset: false
+  app: "app/TheApp-v1.10.0.apk"
+  autoGrantPermissions: "true"
+  newCommandTimeout: "3600"
+  eventTimings: true
+  automationName: "UIAutomator2"
+  fullReset: true
+  noReset: false
 iOS:
-    app:
-    appPackage:
-    appActivity:
+  app:
+  appPackage:
+  appActivity:
+chrome:
+  browserName: chrome
+firefox:
+  browserName: firefox
 browserstacks:
-    enabled: "false"
-    project: "My First Project"
-    build: "My First Build"
-    name: "Sample Test"
-    automationName: "UIAutomator2"
-    username: <BROWSERSTACK_USERNAME>
-    accessKey: <BROWSERSTACK_ACCESS_KEY>
-    browserstack.debug: "true"
-    app: "bs://7e34e875691d99ce98ae30ac006dfaaffe3f738a"
-    devices:
-        - device: "Samsung Galaxy A10"
-          os_version: "9.0"
-        - device: "Samsung Galaxy S20 Plus"
-          os_version: "10.0"
+  enabled: "false"
+  project: "My First Project"
+  build: "My First Build"
+  name: "Sample Test"
+  automationName: "UIAutomator2"
+  username: vinhnguyen5
+  accessKey: BGXjQCA1xCVc7JKsh2ez
+  browserstack.debug: "true"
+  androidUseRunningApp: "true"
+  app: "bs://7e34e875691d99ce98ae30ac006dfaaffe3f738a"
+  devices:
+    - device: "Samsung Galaxy A10"
+      os_version: "9.0"

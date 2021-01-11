@@ -5,6 +5,7 @@ import helper.Platform;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import server.AppiumServerManager;
 import utils.YamlUtils;
 
@@ -20,7 +21,7 @@ import static io.appium.java_client.remote.MobileCapabilityType.UDID;
 import static org.openqa.selenium.remote.CapabilityType.PLATFORM_NAME;
 
 public class iOSDriverManager {
-	public AppiumDriver createDriver(Device device) {
+	public RemoteWebDriver createDriver(Device device) {
 		AppiumDriver driver = null;
 		DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
 		desiredCapabilities.setCapability(PLATFORM_NAME, device.getPlatformName());
@@ -28,15 +29,14 @@ public class iOSDriverManager {
 		desiredCapabilities.setCapability(UDID, device.getDeviceId());
 		desiredCapabilities.setCapability(WDA_LOCAL_PORT, ThreadLocalRandom.current().nextInt(8100, 8299));
 		try {
-			for (Map.Entry<String, Object> entry: YamlUtils.getInstance().getNodeFromKey(Platform.IOS.platformName).entrySet())
+			for (Map.Entry<String, Object> entry : YamlUtils.getInstance().getNodeFromKey(Platform.IOS.platformName).entrySet())
 				if (entry.getKey().equals("app")) {
 					desiredCapabilities.setCapability(entry.getKey(), FileSystems.getDefault()
 							.getPath((String) entry.getValue())
 							.toAbsolutePath().normalize().toString());
-				}
-				else
+				} else
 					desiredCapabilities.setCapability(entry.getKey(), entry.getValue());
-				driver = new AndroidDriver<>(new URL(AppiumServerManager.getAppiumServerAddress()), desiredCapabilities);
+			driver = new AndroidDriver<>(new URL(AppiumServerManager.getAppiumServerAddress()), desiredCapabilities);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

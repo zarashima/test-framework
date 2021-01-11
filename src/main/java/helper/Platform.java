@@ -1,7 +1,11 @@
 package helper;
 
 public enum Platform {
-	ANDROID("android"), IOS("iOS"), BROWSERSTACK("browserstacks");
+	ANDROID("android"),
+	IOS("iOS"),
+	BROWSERSTACK("browserstacks"),
+	CHROME("chrome"),
+	FIREFOX("firefox");
 
 	public final String platformName;
 

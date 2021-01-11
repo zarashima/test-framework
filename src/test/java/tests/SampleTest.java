@@ -9,7 +9,6 @@ import org.testng.annotations.Test;
 public class SampleTest extends BaseTest {
 	@Test(description = "Verify application is installed")
 	public void verifyApplicationIsInstalled() {
-		verificationKw.verifyEqual(applicationKw.isAppInstalled(
-				applicationKw.getCurrentPackage()), true);
+		verificationKw.verifyEqual(applicationKw.isAppInstalled(applicationKw.getCurrentPackage()), true);
 	}
 }

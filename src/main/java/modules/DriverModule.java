@@ -4,13 +4,13 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 import drivers.DriverManager;
 import ensure.Wait;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class DriverModule extends AbstractModule {
 
 	@Provides
-	public AppiumDriver getDriver() {
+	public RemoteWebDriver getDriver() {
 		return DriverManager.getDriver();
 	}
 
@@ -21,7 +21,7 @@ public class DriverModule extends AbstractModule {
 
 	@Provides
 	public JavascriptExecutor getJsExecutor() {
-		return (JavascriptExecutor) DriverManager.getDriver();
+		return DriverManager.getDriver();
 	}
 
 }

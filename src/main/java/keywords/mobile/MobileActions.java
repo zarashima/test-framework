@@ -1,10 +1,11 @@
-package keywords;
+package keywords.mobile;
 
 import com.google.inject.Inject;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static io.appium.java_client.touch.TapOptions.tapOptions;
 import static io.appium.java_client.touch.WaitOptions.waitOptions;
@@ -16,21 +17,21 @@ import static java.time.Duration.ofSeconds;
 public class MobileActions {
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	public MobileActions(AppiumDriver driver) {
+	public MobileActions(RemoteWebDriver driver) {
 		this.driver = driver;
 	}
 
 	public void tapOnElement(MobileElement element) {
-		new TouchAction<>(driver)
+		new TouchAction((AppiumDriver) driver)
 				.tap(tapOptions().withElement(element(element)))
 				.waitAction(waitOptions(ofMillis(250))).perform();
 	}
 
 	public void pressByElement(MobileElement element, long seconds) {
-		new TouchAction<>(driver)
+		new TouchAction<>((AppiumDriver) driver)
 				.press(element(element))
 				.waitAction(waitOptions(ofSeconds(seconds)))
 				.release().perform();
@@ -42,7 +43,7 @@ public class MobileActions {
 		int startPoint = (int) (windowSize.width * startPercentage);
 		int endPoint = (int) (windowSize.width * endPercentage);
 
-		new TouchAction<>(driver)
+		new TouchAction<>((AppiumDriver) driver)
 				.press(point(anchor, startPoint))
 				.waitAction(waitOptions(ofMillis(1000)))
 				.moveTo(point(anchor, endPoint))

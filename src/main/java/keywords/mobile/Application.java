@@ -1,4 +1,4 @@
-package keywords;
+package keywords.mobile;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.Inject;
@@ -8,18 +8,21 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.Activity;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
+import keywords.common.Element;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.net.URL;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Application {
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	Device device;
+	DeviceKW deviceKW;
 
 	@Inject
 	Element element;
@@ -31,48 +34,53 @@ public class Application {
 	Wait wait;
 
 	@Inject
-	public Application(AppiumDriver driver) {
+	public Application(RemoteWebDriver driver) {
 		this.driver = driver;
 		wait = new Wait(driver);
 	}
 
 	public boolean isAppInstalled(String bundleId) {
-		if (device.isAndroid())
-			return driver.isAppInstalled(bundleId);
+		if (deviceKW.isAndroid())
+			return ((AppiumDriver) driver).isAppInstalled(bundleId);
 		else
 			return (Boolean) driver.executeScript("mobile : isAppInstalled", new HashMap<>().put("bundleId", bundleId));
 	}
 
 	public void activateApp(String bundleId) {
-		if (device.isAndroid())
-			driver.activateApp(bundleId);
-		else
-			mobileActions.executeScript("mobile : activateApp", new HashMap<>().put("bundleId", bundleId));
+		((AppiumDriver) driver).activateApp(bundleId);
 	}
 
 	public void installApp(String appPath) {
-		if (device.isAndroid())
-			driver.activateApp(appPath);
-		else
-			mobileActions.executeScript("mobile: installApp", new HashMap<>().put("app", appPath));
+		((AppiumDriver) driver).installApp(appPath);
 	}
 
-	public void launchApp(String bundleId) {
-		if (device.isAndroid())
-			driver.launchApp();
-		else
-			mobileActions.executeScript("mobile: launchApp", new HashMap<>().put("bundleId", bundleId));
+	public void launchApp() {
+		((AppiumDriver) driver).launchApp();
 	}
 
-	public void startBrowserApplication() {
-		if (device.isAndroid())
+	public void runAppInBackground(long seconds) {
+		((AppiumDriver) driver).runAppInBackground(Duration.ofSeconds(seconds));
+	}
+
+	public void startBrowser() {
+		if (deviceKW.isAndroid())
 			activateApp(StringConstants.ANDROID_CHROME_BUNDLE_ID);
 		else
 			activateApp(StringConstants.IOS_SAFARI_BUNDLE_ID);
 	}
 
-	public void runAppInBackground(long seconds) {
-		driver.runAppInBackground(Duration.ofSeconds(seconds));
+	public String getWebContext() {
+		ArrayList<String> contexts = new ArrayList<String>(((AppiumDriver) driver).getContextHandles());
+		for (String context : contexts) {
+			if (!context.equals("NATIVE_APP")) {
+				return context;
+			}
+		}
+		return null;
+	}
+
+	public void switchContext() {
+		((AppiumDriver) driver).context(getWebContext());
 	}
 
 	public void openDeepLink(URL url, String packageName) {
@@ -80,8 +88,8 @@ public class Application {
 				"url", url.toString(),
 				"bundle", packageName
 		);
-		if (device.isIOS()) {
-			launchApp(StringConstants.IOS_SAFARI_BUNDLE_ID);
+		if (deviceKW.isIOS()) {
+			activateApp(StringConstants.IOS_SAFARI_BUNDLE_ID);
 			if (((IOSDriver) driver).isKeyboardShown()) {
 				element.click(((IOSDriver) driver).findElementByIosNsPredicate("type == 'XCUIElementTypeButton' && name CONTAINS 'URL'"));
 			}
@@ -100,6 +108,6 @@ public class Application {
 	}
 
 	public void startActivity(String appPackage, String appActivity) {
-		((AndroidDriver)driver).startActivity(new Activity(appPackage, appActivity));
+		((AndroidDriver) driver).startActivity(new Activity(appPackage, appActivity));
 	}
 }

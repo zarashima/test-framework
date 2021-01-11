@@ -1,15 +1,15 @@
 package drivers;
 
 import drivers.local.LocalDriverManager;
-import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class DriverFactory {
 
 	private DriverFactory() {
 	}
 
-	public static AppiumDriver createInstance(Device device) {
-		AppiumDriver driver;
+	public static RemoteWebDriver createInstance(Device device) {
+		RemoteWebDriver driver;
 		driver = new LocalDriverManager().createInstance(device);
 		return driver;
 	}

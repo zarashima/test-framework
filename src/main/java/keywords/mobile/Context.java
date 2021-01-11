@@ -1,7 +1,8 @@
-package keywords;
+package keywords.mobile;
 
 import com.google.inject.Inject;
-import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.android.AndroidDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -9,19 +10,19 @@ import java.util.Set;
 public class Context {
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	public Context(AppiumDriver driver) {
+	public Context(RemoteWebDriver driver) {
 		this.driver = driver;
 	}
 
 	public Set<String> getAllContexts() {
-		return driver.getContextHandles();
+		return ((AndroidDriver) driver).getContextHandles();
 	}
 
 	public String getWebContext() {
-		ArrayList<String> contexts = new ArrayList<>(driver.getContextHandles());
+		ArrayList<String> contexts = new ArrayList<>(((AndroidDriver) driver).getContextHandles());
 		for (String context : contexts) {
 			if (context.contains("WEBVIEW"))
 				return context;
@@ -30,7 +31,7 @@ public class Context {
 	}
 
 	public void switchContext(String contextName) {
-		driver.context(contextName);
+		((AndroidDriver) driver).context(contextName);
 	}
 
 	public boolean isWebViewAvailable() {

@@ -1,8 +1,9 @@
-package keywords;
+package keywords.common;
 
 import com.google.inject.Inject;
-import io.appium.java_client.AppiumDriver;
+import keywords.mobile.MobileActions;
 import org.openqa.selenium.logging.LogEntries;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -15,17 +16,21 @@ import java.util.stream.StreamSupport;
 
 public class Logs {
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
 	MobileActions mobileActions;
 
-	final LogEntries logEntries;
+	LogEntries logEntries;
 
 	@Inject
-	public Logs(AppiumDriver driver) {
+	public Logs(RemoteWebDriver driver, LogEntries logEntries) {
 		this.driver = driver;
-		logEntries = driver.manage().logs().get("logcat");
+		this.logEntries = logEntries;
+	}
+
+	public void initLogEntries(String logType) {
+		logEntries = driver.manage().logs().get(logType);
 	}
 
 	public void printLogcat(int limitSize) {

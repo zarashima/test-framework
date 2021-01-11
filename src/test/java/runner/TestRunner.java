@@ -5,11 +5,11 @@ import com.testinium.deviceinformation.DeviceInfo;
 import com.testinium.deviceinformation.DeviceInfoImpl;
 import com.testinium.deviceinformation.device.DeviceType;
 import com.testinium.deviceinformation.exception.DeviceNotFoundException;
+import config.BrowserStackConfig;
 import drivers.Device;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import helper.Platform;
-import config.BrowserStackConfig;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import utils.*;
@@ -53,11 +53,12 @@ public class TestRunner {
 				}
 			}
 		}
+		devices.add(new Device("chrome", "", "", ""));
 
 		// Add remote devices
 		if (BrowserStackConfig.isEnabled()) {
 			for (Map<String, String> device : BrowserStackConfig.getDevices()) {
-				devices.add(new Device(Platform.BROWSERSTACK.name(), device.get("device"), "", device.get("os_version")));
+				devices.add(new Device(Platform.BROWSERSTACK.name(), device.get("deviceKW"), "", device.get("os_version")));
 			}
 		}
 

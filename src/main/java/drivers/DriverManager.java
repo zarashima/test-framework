@@ -1,20 +1,20 @@
 package drivers;
 
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class DriverManager {
 
-	private static final ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+	private static final ThreadLocal<RemoteWebDriver> driver = new ThreadLocal<>();
 
 	private DriverManager() {
 	}
 
-	public static AppiumDriver getDriver() {
+	public static RemoteWebDriver getDriver() {
 		return driver.get();
 	}
 
-	public static void setDriver(AppiumDriver driver) {
+	public static void setDriver(RemoteWebDriver driver) {
 		DriverManager.driver.set(driver);
 	}
 

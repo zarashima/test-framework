@@ -1,9 +1,9 @@
-package keywords;
+package keywords.common;
 
 import com.google.inject.Inject;
 import ensure.Wait;
-import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.LogUtils;
 import utils.WebElementUtils;
 
@@ -13,10 +13,10 @@ public class Element {
 	Wait wait;
 
 	@Inject
-	AppiumDriver driver;
+	RemoteWebDriver driver;
 
 	@Inject
-	public Element(AppiumDriver driver) {
+	public Element(RemoteWebDriver driver) {
 		this.driver = driver;
 		wait = new Wait(driver);
 	}
