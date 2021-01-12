@@ -6,6 +6,7 @@ import com.testinium.deviceinformation.DeviceInfoImpl;
 import com.testinium.deviceinformation.device.DeviceType;
 import com.testinium.deviceinformation.exception.DeviceNotFoundException;
 import config.BrowserStackConfig;
+import config.ChromeConfig;
 import drivers.Device;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -53,12 +54,15 @@ public class TestRunner {
 				}
 			}
 		}
-		devices.add(new Device("chrome", "", "", ""));
+
+		// Add browsers
+		if (ChromeConfig.isEnabled())
+			devices.add(new Device("chrome", "", "", ""));
 
 		// Add remote devices
 		if (BrowserStackConfig.isEnabled()) {
 			for (Map<String, String> device : BrowserStackConfig.getDevices()) {
-				devices.add(new Device(Platform.BROWSERSTACK.name(), device.get("deviceKW"), "", device.get("os_version")));
+				devices.add(new Device(Platform.BROWSERSTACK.name(), device.get("device"), "", device.get("os_version")));
 			}
 		}
 

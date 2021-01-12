@@ -11,8 +11,10 @@ iOS:
   appPackage:
   appActivity:
 chrome:
+  enabled: "false"
   browserName: chrome
 firefox:
+  enabled: "false"
   browserName: firefox
 browserstacks:
   enabled: "false"
@@ -24,7 +26,7 @@ browserstacks:
   accessKey: BGXjQCA1xCVc7JKsh2ez
   browserstack.debug: "true"
   androidUseRunningApp: "true"
-  app: "bs://7e34e875691d99ce98ae30ac006dfaaffe3f738a"
+  app: "bs://31c0cfa07302f93d1eb65ebbf032cf664c14b690"
   devices:
     - device: "Samsung Galaxy A10"
       os_version: "9.0"
