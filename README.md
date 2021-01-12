@@ -2,7 +2,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/eb00f5efb3cd4757b621b04c440fa161)](https://app.codacy.com/gh/zarashima/appium-test-framework?utm_source=github.com&utm_medium=referral&utm_content=zarashima/appium-test-framework&utm_campaign=Badge_Grade) ![Maven Test](https://github.com/zarashima/appium-test-framework/workflows/Maven%20Test/badge.svg?branch=master)
 
-A mobile automation framework to aid in testers for mobile automation
+A mobile & web automation framework to aid in testers for mobile automation
 
 # Features
 * Auto detect plugged in real Android/iOS devices and make corresponding executions
