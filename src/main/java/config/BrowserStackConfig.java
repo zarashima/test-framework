@@ -3,7 +3,6 @@ package config;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import helper.Platform;
-import org.checkerframework.checker.nullness.Opt;
 import utils.ExecutionUtils;
 import utils.YamlUtils;
 
@@ -11,7 +10,6 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
@@ -19,7 +17,7 @@ public class BrowserStackConfig {
 	private static final String bsPrefix = "bs.";
 	private static final Map<String, Object> browserStackNode;
 
-	private BrowserStackConfig(){}
+	private BrowserStackConfig() { }
 
 	static {
 		browserStackNode = YamlUtils.getInstance().getNodeFromKey(Platform.BROWSERSTACK.platformName);
@@ -32,7 +30,7 @@ public class BrowserStackConfig {
 
 	public static List<Map<String, String>> getDevices() {
 		Gson gson = new Gson();
-		Type resultType = new TypeToken<List<Map<String, String>>>(){}.getType();
+		Type resultType = new TypeToken<List<Map<String, String>>>() {}.getType();
 		List<Map<String, String>> results = gson.fromJson(System.getProperty("bs.devices"), resultType);
 		return (Optional.ofNullable(results).orElse((List<Map<String, String>>)
 				browserStackNode.get("devices")));
@@ -45,7 +43,7 @@ public class BrowserStackConfig {
 						s -> Optional.ofNullable(System.getProperty(bsPrefix + s.getKey())).orElse((String) s.getValue())));
 	}
 
-	public static  String getUserName() {
+	public static String getUserName() {
 		return getFirstFoundValue(ExecutionUtils.getEnv("BROWSERSTACK_USERNAME"),
 				System.getProperty("username"), (String) browserStackNode.get("username"));
 	}
