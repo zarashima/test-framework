@@ -11,11 +11,17 @@ iOS:
   appPackage:
   appActivity:
 chrome:
-  enabled: "false"
-  browserName: chrome
+  enabled: "true"
+  browserName: "chrome"
+  arguments:
+    - --headless
 firefox:
   enabled: "false"
-  browserName: firefox
+  browserName: "firefox"
+remote:
+  enabled: "false"
+  url: "https://localhost:4444/wd/hub"
+  browserName: "chrome"
 browserstacks:
   enabled: "false"
   project: "My First Project"
