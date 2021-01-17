@@ -7,6 +7,7 @@ import com.testinium.deviceinformation.device.DeviceType;
 import com.testinium.deviceinformation.exception.DeviceNotFoundException;
 import config.BrowserStackConfig;
 import config.ChromeConfig;
+import config.RemoteConfig;
 import drivers.Device;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -58,6 +59,10 @@ public class TestRunner {
 		// Add browsers
 		if (ChromeConfig.isEnabled())
 			devices.add(new Device("chrome", "", "", ""));
+
+		// Add devices
+		if (RemoteConfig.isEnabled())
+			devices.add(new Device("remote", "", "", ""));
 
 		// Add remote devices
 		if (BrowserStackConfig.isEnabled()) {

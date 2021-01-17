@@ -21,7 +21,8 @@ public class BrowserStackDriverManager {
 			desiredCapabilities.setCapability(setting.getKey(), setting.getValue());
 		}
 		try {
-			driver = new AndroidDriver<>(new URL("https://" + BrowserStackConfig.getUserName() + ":" +
+			driver = new AndroidDriver<>(new URL("https://" +
+					BrowserStackConfig.getUserName() + ":" +
 					BrowserStackConfig.getAccessKey() + "@hub-cloud.browserstack.com/wd/hub"), desiredCapabilities);
 		} catch (MalformedURLException e) {
 			e.printStackTrace();

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unchecked")
 public class BrowserStackConfig {
 	private static final String bsPrefix = "bs.";
-	private static final Map<String, Object> browserStackNode;
+	public static final Map<String, Object> browserStackNode;
 
 	private BrowserStackConfig() { }
 
