@@ -12,7 +12,7 @@
 		<webdrivermanager.version>4.0.0</webdrivermanager.version>
 		<guice.version>4.2.3</guice.version>
 		<guava.version>28.1-jre</guava.version>
-		<cucumber-java.version>5.0.0-RC1</cucumber-java.version>
+		<cucumber-java.version>6.8.1</cucumber-java.version>
 		<rest-assured.version>4.3.1</rest-assured.version>
 		<testng.version>7.1.0</testng.version>
 		<awaitility.version>4.0.1</awaitility.version>
@@ -112,7 +112,13 @@
 		<dependency>
 			<groupId>com.epam.reportportal</groupId>
 			<artifactId>agent-java-testng</artifactId>
-			<version>5.0.6</version>
+			<version>5.0.9</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.epam.reportportal</groupId>
+			<artifactId>agent-java-cucumber4</artifactId>
+			<version>5.0.1</version>
 		</dependency>
 
 		<dependency>
@@ -169,11 +175,6 @@
 			<version>${guava.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>io.cucumber</groupId>
-			<artifactId>cucumber-java</artifactId>
-			<version>${cucumber-java.version}</version>
-		</dependency>
 
 		<dependency>
 			<groupId>io.rest-assured</groupId>
@@ -221,11 +222,30 @@
 		</dependency>
 
 		<dependency>
-			<groupId>info.cukes</groupId>
-			<artifactId>cucumber-java8</artifactId>
-			<version>RELEASE</version>
-			<scope>test</scope>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-java</artifactId>
+			<version>4.8.1</version>
 		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-testng</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-core -->
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>cucumber-core</artifactId>
+			<version>4.7.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.cucumber</groupId>
+			<artifactId>gherkin</artifactId>
+			<version>5.1.0</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>junit</groupId>
@@ -289,11 +309,11 @@
 			<artifactId>influxdb-java</artifactId>
 			<version>2.12</version>
 		</dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.dataformat</groupId>
-            <artifactId>jackson-dataformat-yaml</artifactId>
-            <version>2.11.2</version>
-        </dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-yaml</artifactId>
+			<version>2.11.2</version>
+		</dependency>
 
-    </dependencies>
+	</dependencies>
 </project>
