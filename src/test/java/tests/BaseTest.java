@@ -12,15 +12,16 @@ import drivers.Device;
 import drivers.DriverFactory;
 import drivers.DriverManager;
 import extentreports.ExtentTestManager;
-import keywords.mobile.Performance;
+import keywords.mobile.*;
 import keywords.common.Element;
 import keywords.common.Verification;
-import keywords.mobile.Application;
-import keywords.mobile.Clipboard;
-import keywords.mobile.DeviceKW;
 import keywords.web.Browser;
 import modules.DriverModule;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.testng.collections.Sets;
@@ -32,7 +33,9 @@ import java.util.Set;
 
 import static com.epam.reportportal.testng.TestNGService.ITEM_TREE;
 
-public class BaseTest {
+@TestPropertySource("classpath:env/${env}.properties")
+@ContextConfiguration("classpath*:application-context.xml")
+public class BaseTest extends AbstractTestNGSpringContextTests {
 
 	protected RemoteWebDriver driver;
 	protected Browser browserKw;
@@ -41,6 +44,7 @@ public class BaseTest {
 	protected Clipboard clipboardKw;
 	public Application applicationKw;
 	protected Performance performanceKw;
+	protected Scroll scrollKw;
 	protected Device device;
 	protected DeviceKW deviceKw;
 
@@ -64,6 +68,7 @@ public class BaseTest {
 		applicationKw = injector.getInstance(Application.class);
 		clipboardKw = injector.getInstance(Clipboard.class);
 		performanceKw = injector.getInstance(Performance.class);
+		scrollKw = injector.getInstance(Scroll.class);
 	}
 
 	public void afterMethod(ITestResult testResult) {
