@@ -20,7 +20,6 @@ import modules.DriverModule;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
@@ -44,7 +43,6 @@ public class BaseTest extends AbstractTestNGSpringContextTests {
 	protected Clipboard clipboardKw;
 	public Application applicationKw;
 	protected Performance performanceKw;
-	protected Scroll scrollKw;
 	protected Device device;
 	protected DeviceKW deviceKw;
 
@@ -68,7 +66,6 @@ public class BaseTest extends AbstractTestNGSpringContextTests {
 		applicationKw = injector.getInstance(Application.class);
 		clipboardKw = injector.getInstance(Clipboard.class);
 		performanceKw = injector.getInstance(Performance.class);
-		scrollKw = injector.getInstance(Scroll.class);
 	}
 
 	public void afterMethod(ITestResult testResult) {
